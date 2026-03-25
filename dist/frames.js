@@ -7,7 +7,7 @@ exports.generateFrame = generateFrame;
 const canvas_1 = require("@napi-rs/canvas");
 const promises_1 = __importDefault(require("fs/promises"));
 async function generateFrame(arabicText, englishText, outPath) {
-    const canvas = (0, canvas_1.createCanvas)(1280, 720);
+    let canvas = (0, canvas_1.createCanvas)(1280, 720);
     const ctx = canvas.getContext("2d");
     // Solid white background
     ctx.fillStyle = "#ffffff";

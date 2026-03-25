@@ -6,7 +6,7 @@ export async function generateFrame(
   englishText: string | null,
   outPath: string
 ): Promise<void> {
-  const canvas = createCanvas(1280, 720);
+  let canvas = createCanvas(1280, 720);
   const ctx = canvas.getContext("2d");
 
   // Solid white background
