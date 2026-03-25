@@ -9,8 +9,8 @@ datasource db {
 }
 
 model VideoJob {
-  id        String   @id
-  status    String   // "PENDING", "PROCESSING", "READY", "FAILED"
-  videoUrl  String?
-  error     String?
+  id       String  @id
+  status   String // "PENDING", "PROCESSING", "READY", "FAILED"
+  videoUrl String?
+  error    String?
 }
