@@ -9,8 +9,15 @@ datasource db {
 }
 
 model VideoJob {
-  id        String   @id
-  status    String   // "PENDING", "PROCESSING", "READY", "FAILED"
+  id        String      @id
+  status    VideoStatus @default(PENDING)
   videoUrl  String?
   error     String?
+}
+
+enum VideoStatus {
+  PENDING
+  PROCESSING
+  READY
+  FAILED
 }

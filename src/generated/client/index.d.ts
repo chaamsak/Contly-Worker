@@ -20,6 +20,25 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 export type VideoJob = $Result.DefaultSelection<Prisma.$VideoJobPayload>
 
 /**
+ * Enums
+ */
+export namespace $Enums {
+  export const VideoStatus: {
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING',
+  READY: 'READY',
+  FAILED: 'FAILED'
+};
+
+export type VideoStatus = (typeof VideoStatus)[keyof typeof VideoStatus]
+
+}
+
+export type VideoStatus = $Enums.VideoStatus
+
+export const VideoStatus: typeof $Enums.VideoStatus
+
+/**
  * ##  Prisma Client ʲˢ
  * 
  * Type-safe database client for TypeScript & Node.js
@@ -855,14 +874,14 @@ export namespace Prisma {
 
   export type VideoJobMinAggregateOutputType = {
     id: string | null
-    status: string | null
+    status: $Enums.VideoStatus | null
     videoUrl: string | null
     error: string | null
   }
 
   export type VideoJobMaxAggregateOutputType = {
     id: string | null
-    status: string | null
+    status: $Enums.VideoStatus | null
     videoUrl: string | null
     error: string | null
   }
@@ -972,7 +991,7 @@ export namespace Prisma {
 
   export type VideoJobGroupByOutputType = {
     id: string
-    status: string
+    status: $Enums.VideoStatus
     videoUrl: string | null
     error: string | null
     _count: VideoJobCountAggregateOutputType | null
@@ -1021,7 +1040,7 @@ export namespace Prisma {
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      status: string
+      status: $Enums.VideoStatus
       videoUrl: string | null
       error: string | null
     }, ExtArgs["result"]["videoJob"]>
@@ -1418,7 +1437,7 @@ export namespace Prisma {
    */ 
   interface VideoJobFieldRefs {
     readonly id: FieldRef<"VideoJob", 'String'>
-    readonly status: FieldRef<"VideoJob", 'String'>
+    readonly status: FieldRef<"VideoJob", 'VideoStatus'>
     readonly videoUrl: FieldRef<"VideoJob", 'String'>
     readonly error: FieldRef<"VideoJob", 'String'>
   }
@@ -1777,6 +1796,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'VideoStatus'
+   */
+  export type EnumVideoStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VideoStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'VideoStatus[]'
+   */
+  export type ListEnumVideoStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VideoStatus[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -1798,7 +1831,7 @@ export namespace Prisma {
     OR?: VideoJobWhereInput[]
     NOT?: VideoJobWhereInput | VideoJobWhereInput[]
     id?: StringFilter<"VideoJob"> | string
-    status?: StringFilter<"VideoJob"> | string
+    status?: EnumVideoStatusFilter<"VideoJob"> | $Enums.VideoStatus
     videoUrl?: StringNullableFilter<"VideoJob"> | string | null
     error?: StringNullableFilter<"VideoJob"> | string | null
   }
@@ -1815,7 +1848,7 @@ export namespace Prisma {
     AND?: VideoJobWhereInput | VideoJobWhereInput[]
     OR?: VideoJobWhereInput[]
     NOT?: VideoJobWhereInput | VideoJobWhereInput[]
-    status?: StringFilter<"VideoJob"> | string
+    status?: EnumVideoStatusFilter<"VideoJob"> | $Enums.VideoStatus
     videoUrl?: StringNullableFilter<"VideoJob"> | string | null
     error?: StringNullableFilter<"VideoJob"> | string | null
   }, "id">
@@ -1835,56 +1868,56 @@ export namespace Prisma {
     OR?: VideoJobScalarWhereWithAggregatesInput[]
     NOT?: VideoJobScalarWhereWithAggregatesInput | VideoJobScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"VideoJob"> | string
-    status?: StringWithAggregatesFilter<"VideoJob"> | string
+    status?: EnumVideoStatusWithAggregatesFilter<"VideoJob"> | $Enums.VideoStatus
     videoUrl?: StringNullableWithAggregatesFilter<"VideoJob"> | string | null
     error?: StringNullableWithAggregatesFilter<"VideoJob"> | string | null
   }
 
   export type VideoJobCreateInput = {
     id: string
-    status: string
+    status?: $Enums.VideoStatus
     videoUrl?: string | null
     error?: string | null
   }
 
   export type VideoJobUncheckedCreateInput = {
     id: string
-    status: string
+    status?: $Enums.VideoStatus
     videoUrl?: string | null
     error?: string | null
   }
 
   export type VideoJobUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumVideoStatusFieldUpdateOperationsInput | $Enums.VideoStatus
     videoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     error?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type VideoJobUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumVideoStatusFieldUpdateOperationsInput | $Enums.VideoStatus
     videoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     error?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type VideoJobCreateManyInput = {
     id: string
-    status: string
+    status?: $Enums.VideoStatus
     videoUrl?: string | null
     error?: string | null
   }
 
   export type VideoJobUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumVideoStatusFieldUpdateOperationsInput | $Enums.VideoStatus
     videoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     error?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type VideoJobUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumVideoStatusFieldUpdateOperationsInput | $Enums.VideoStatus
     videoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     error?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -1902,6 +1935,13 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type EnumVideoStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.VideoStatus | EnumVideoStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.VideoStatus[] | ListEnumVideoStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.VideoStatus[] | ListEnumVideoStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumVideoStatusFilter<$PrismaModel> | $Enums.VideoStatus
   }
 
   export type StringNullableFilter<$PrismaModel = never> = {
@@ -1963,6 +2003,16 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type EnumVideoStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.VideoStatus | EnumVideoStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.VideoStatus[] | ListEnumVideoStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.VideoStatus[] | ListEnumVideoStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumVideoStatusWithAggregatesFilter<$PrismaModel> | $Enums.VideoStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumVideoStatusFilter<$PrismaModel>
+    _max?: NestedEnumVideoStatusFilter<$PrismaModel>
+  }
+
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -1985,6 +2035,10 @@ export namespace Prisma {
     set?: string
   }
 
+  export type EnumVideoStatusFieldUpdateOperationsInput = {
+    set?: $Enums.VideoStatus
+  }
+
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
   }
@@ -2001,6 +2055,13 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedEnumVideoStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.VideoStatus | EnumVideoStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.VideoStatus[] | ListEnumVideoStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.VideoStatus[] | ListEnumVideoStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumVideoStatusFilter<$PrismaModel> | $Enums.VideoStatus
   }
 
   export type NestedStringNullableFilter<$PrismaModel = never> = {
@@ -2043,6 +2104,16 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedEnumVideoStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.VideoStatus | EnumVideoStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.VideoStatus[] | ListEnumVideoStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.VideoStatus[] | ListEnumVideoStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumVideoStatusWithAggregatesFilter<$PrismaModel> | $Enums.VideoStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumVideoStatusFilter<$PrismaModel>
+    _max?: NestedEnumVideoStatusFilter<$PrismaModel>
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {

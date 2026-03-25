@@ -143,7 +143,12 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.VideoStatus = exports.$Enums.VideoStatus = {
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING',
+  READY: 'READY',
+  FAILED: 'FAILED'
+};
 
 exports.Prisma.ModelName = {
   VideoJob: 'VideoJob'
