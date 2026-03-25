@@ -9,9 +9,12 @@ datasource db {
 
 model VideoJob {
   id        String      @id
+  listId    String
   status    VideoStatus @default(PENDING)
   videoUrl  String?
   error     String?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 }
 
 enum VideoStatus {
