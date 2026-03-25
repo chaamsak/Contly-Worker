@@ -76,14 +76,29 @@ function concatVideos(
   outPath: string,
   tempDir: string
 ): Promise<void> {
-  return new Promise((resolve, reject) => {
-    const cmd = ffmpeg();
-    videoPaths.forEach((v) => cmd.input(v));
-
-    cmd
-      .on("error", (err) => reject(err))
-      .on("end", () => resolve())
-      .mergeToFile(outPath, tempDir);
+  return new Promise(async (resolve, reject) => {
+    // Write the native FFmpeg concat demuxer format into a temporary text file
+    const listPath = path.join(tempDir, "concat_list.txt");
+    const listContent = videoPaths
+      .map((v) => `file '${v.replace(/'/g, "'\\''")}'`)
+      .join("\n");
+      
+    try {
+      await fs.writeFile(listPath, listContent);
+      
+      ffmpeg()
+        .input(listPath)
+        .inputOptions(["-f concat", "-safe 0"])
+        .outputOptions(["-c copy"])
+        .save(outPath)
+        .on("end", () => resolve())
+        .on("error", (err) => {
+          console.error("Concat Demuxer Error:", err);
+          reject(err);
+        });
+    } catch (e) {
+      reject(e);
+    }
   });
 }
 

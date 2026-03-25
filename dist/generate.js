@@ -69,13 +69,28 @@ function createItemVideo(imagePath, audioPath, outPath, delaySec) {
     });
 }
 function concatVideos(videoPaths, outPath, tempDir) {
-    return new Promise((resolve, reject) => {
-        const cmd = (0, fluent_ffmpeg_1.default)();
-        videoPaths.forEach((v) => cmd.input(v));
-        cmd
-            .on("error", (err) => reject(err))
-            .on("end", () => resolve())
-            .mergeToFile(outPath, tempDir);
+    return new Promise(async (resolve, reject) => {
+        // Write the native FFmpeg concat demuxer format into a temporary text file
+        const listPath = path_1.default.join(tempDir, "concat_list.txt");
+        const listContent = videoPaths
+            .map((v) => `file '${v.replace(/'/g, "'\\''")}'`)
+            .join("\n");
+        try {
+            await promises_1.default.writeFile(listPath, listContent);
+            (0, fluent_ffmpeg_1.default)()
+                .input(listPath)
+                .inputOptions(["-f concat", "-safe 0"])
+                .outputOptions(["-c copy"])
+                .save(outPath)
+                .on("end", () => resolve())
+                .on("error", (err) => {
+                console.error("Concat Demuxer Error:", err);
+                reject(err);
+            });
+        }
+        catch (e) {
+            reject(e);
+        }
     });
 }
 async function processVideoJob(request) {
