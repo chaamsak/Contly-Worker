@@ -7,8 +7,8 @@ exports.generateFrame = generateFrame;
 const canvas_1 = require("@napi-rs/canvas");
 const promises_1 = __importDefault(require("fs/promises"));
 const path_1 = __importDefault(require("path"));
-// Initialize the exact Arabic TrueType font physical binaries globally so Render's native Linux engine can bypass its missing system fonts
-const fontPath = path_1.default.join(process.cwd(), "src", "assets", "NotoNaskhArabic-Regular.ttf");
+// Initialize the exact Arabic TrueType font physical binaries globally
+const fontPath = path_1.default.join(__dirname, "..", "assets", "NotoNaskhArabic-Regular.ttf");
 try {
     canvas_1.GlobalFonts.registerFromPath(fontPath, "Noto Naskh Arabic");
 }
@@ -19,13 +19,14 @@ async function generateFrame(arabicText, englishText, outPath) {
     let canvas = (0, canvas_1.createCanvas)(1280, 720);
     const ctx = canvas.getContext("2d");
     // Dynamically inject the user's high-definition background image design
-    const bgPath = path_1.default.join(process.cwd(), "src", "assets", "background.png");
+    const bgPath = path_1.default.join(__dirname, "..", "assets", "background.png");
     try {
         const bgImage = await (0, canvas_1.loadImage)(bgPath);
         ctx.drawImage(bgImage, 0, 0, 1280, 720);
     }
     catch (e) {
-        // Graceful fallback if background is mysteriously missing
+        console.error("BG load failure at:", bgPath, e);
+        // Graceful fallback
         ctx.fillStyle = "#111827";
         ctx.fillRect(0, 0, 1280, 720);
     }
